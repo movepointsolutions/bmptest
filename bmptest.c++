@@ -30,13 +30,13 @@ void render_file(std::istream &F)
 	size_t height = read4(F);
 	//std::cerr << size << " " << offset << " " << dib_size << " " << width << " " << height << std::endl;
 	F.seekg(offset, std::ios::beg);
-	char a, b, c;
+	char pix[3];
 	std::deque<std::vector<bool>> pixels;
 	for (size_t row = 0; row < height; ++row) {
 		pixels.push_front(std::vector<bool>());
 		for (size_t column = 0; column < width; ++column) {
-			F >> a >> b >> c;
-			pixels.front().push_back(a || b || c);
+			F.read(pix, sizeof(pix));
+			pixels.front().push_back(pix[0] || pix[1] || pix[2]);
 		}
 	}
 	
